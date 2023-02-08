@@ -8,26 +8,27 @@ let submitBtn = document.getElementById('submitbtn')
 const DEFAULT_COLOR = '#614e71';
 const DEFAULT_SIZE = 16;
 const DEFAULT_MODE = 'color';
-let currentColor = DEFAULT_COLOR
-let currentSize = DEFAULT_SIZE
-let currentMode = DEFAULT_MODE
+let currentColor = DEFAULT_COLOR;
+let currentMode = DEFAULT_MODE;
 
 function setCurrentColor(newColor) {
-    currentColor = newColor
+    currentColor = newColor;
 }
 
-function setCurrentSize(newSize) {
-    currentSize = newSize
-}
+
 function setCurrentMode (newMode) {
-    activateButton(newMode)
-    currentMode = newMode
+    activateButton(newMode);
+    currentMode = newMode;
 }
 colorPicker.oninput = (e) => setCurrentColor(e.target.value)
 colorBtn.onclick = () => setCurrentMode('color')
 rainbowBtn.onclick = () => setCurrentMode('rainbow')
 resetBtn.onclick = () => reloadGrid()
 submitBtn.onclick = () => setupGrid(gridNumber.value)
+
+let mouseDown = false
+document.body.onmousedown = () => (mouseDown = true)
+document.body.onmouseup = () => (mouseDown = false)
 
 
 
@@ -49,6 +50,7 @@ function setupGrid(size) {
     const gridElement = document.createElement('div')
     gridElement.classList.add('grid-element')
     gridElement.addEventListener('mouseover', changeColor)
+    gridElement.addEventListener('mousedown', changeColor)
     gridElement.addEventListener('click', eraser)
     container.appendChild(gridElement)
  }
@@ -59,6 +61,7 @@ function eraser(e) {
 }
 
 function changeColor(e) {
+    if (e.type === 'mouseover' && !mouseDown) return;
     if (currentMode === 'rainbow') {
         const randomR = Math.floor(Math.random()*256)
         const randomG = Math.floor(Math.random()*256)
@@ -86,5 +89,6 @@ if (newMode === 'rainbow') {
 }
 window.onload = () => {
     setupGrid(DEFAULT_SIZE);
+    activateButton(DEFAULT_MODE);
 
 }
