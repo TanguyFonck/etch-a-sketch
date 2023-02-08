@@ -1,3 +1,3 @@
 # etch a sketch
  You can draw by holding down your mouse. 
- To erase a cell just click on it.
+ To erase a cell double click on it.
