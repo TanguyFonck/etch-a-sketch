@@ -26,9 +26,6 @@ rainbowBtn.onclick = () => setCurrentMode('rainbow')
 resetBtn.onclick = () => reloadGrid()
 submitBtn.onclick = () => setupGrid(gridNumber.value)
 
-let mouseDown = false
-document.body.onmousedown = () => (mouseDown = true)
-document.body.onmouseup = () => (mouseDown = false)
 
 
 
@@ -41,6 +38,15 @@ function clearGrid() {
     container.innerHTML = ''
 }
 
+
+function eraser(e) {
+    e.target.style.backgroundColor = 'rgb(128,128,128)'
+}
+
+let mouseDown = false;
+document.body.onmousedown = () => (mouseDown = true)
+document.body.onmouseup = () => (mouseDown = false)
+
 function setupGrid(size) {
     clearGrid()
     container.style.gridTemplateColumns = `repeat(${size}, 1fr)`
@@ -51,24 +57,21 @@ function setupGrid(size) {
     gridElement.classList.add('grid-element')
     gridElement.addEventListener('mouseover', changeColor)
     gridElement.addEventListener('mousedown', changeColor)
-    gridElement.addEventListener('click', eraser)
+    gridElement.addEventListener('dblclick', eraser)
     container.appendChild(gridElement)
  }
 }
 
-function eraser(e) {
-    e.target.style.backgroundColor = 'rgb(128,128,128)'
-}
 
 function changeColor(e) {
-    if (e.type === 'mouseover' && !mouseDown) return;
+    if  (mouseDown === false) return
     if (currentMode === 'rainbow') {
         const randomR = Math.floor(Math.random()*256)
         const randomG = Math.floor(Math.random()*256)
         const randomB = Math.floor(Math.random()*256)
         e.target.style.backgroundColor = `rgb(${randomR},${randomG}, ${randomB})`
     }
-    else if(currentMode === 'color') { 
+    else if (currentMode === 'color') { 
         e.target.style.backgroundColor = currentColor
     }
 }

@@ -6,6 +6,8 @@ body {
     align-items: center;
     min-height:100vh;
     max-height: 100vh;
+    /* user select so that it doesnt drag the elements and you can smoothly draw with mouse held down */
+    user-select: none;
     
 }
 .container {
