@@ -64,7 +64,7 @@ function setupGrid(size) {
 
 
 function changeColor(e) {
-    if  (mouseDown === false) return
+    if (e.type === 'mouseover' && !mouseDown) return
     if (currentMode === 'rainbow') {
         const randomR = Math.floor(Math.random()*256)
         const randomG = Math.floor(Math.random()*256)
